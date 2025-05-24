@@ -1,0 +1,35 @@
+name: Build and Deploy to Microservices
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: self-hosted
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: install dependencies of each service
+      run: |
+        npm install express dotenv mongoose bycryptjs dotenv cors jsonwebtoken
+      shell: powershell
+      
+    - name: login test and create a blog using blog service
+      run: |
+        
+      shell: powershell
+
+    - name: login test and do comment using service 
+      run: |
+        
+      shell: powershell
+
+   
+    - name: fetch profile
+      run: 
+         run https//:Localhost:3003/Profile
+      shell: powershell
+      

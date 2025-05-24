@@ -1,0 +1,92 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+  apiservice:
+    build:
+      context: .
+      dockerfile: api gateway/Dockerfile
+    container_name: ums-apiService
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    
+  authservice:
+    build:
+      context: .
+      dockerfile: auth service/Dockerfile
+    container_name: ums-authService
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://localhost:27017/
+      - PORT=3000
+      - JWT_SECRET=your_jwt_secret
+    networks:
+      - app-network
+
+  blogservice:
+    build:
+      context: .
+      dockerfile: blog service/Dockerfile
+    container_name: ums-blogService
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://localhost:27017/
+      - PORT=3000
+      - JWT_SECRET=your_jwt_secret
+    networks:
+      - app-network
+  
+  commentservice:
+    build:
+      context: .
+      dockerfile: comment service/Dockerfile
+    container_name: ums-commentService
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://localhost:27017/
+      - PORT=3000
+      - JWT_SECRET=your_jwt_secret
+    networks:
+      - app-network
+
+  profileservice:
+    build:
+      context: .
+      dockerfile: profile service/Dockerfile
+    container_name: ums-profileService
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://localhost:27017/
+      - PORT=3000
+      - JWT_SECRET=your_jwt_secret
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

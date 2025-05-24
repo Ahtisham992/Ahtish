@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dataviz-ns
+
+resources:
+  # MongoDB resources
+  - secrets.yaml
+  - persistent-volume-claim.yaml
+  - mongodb-deployment.yaml
+  
+  # Backend resources
+  - backend-deployment.yaml
+  
+  # Frontend resources
+  - frontend-deployment.yaml
